@@ -2,20 +2,51 @@ package br.unibh.loja.entidades;
 
 import java.math.BigDecimal;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+import javax.persistence.Version;
+
+@Entity
+@Table(name = "tb_produto", uniqueConstraints = { @UniqueConstraint(columnNames = { "nome" }) })
+
 public class Produto {
-	
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@Column(length = 100, nullable = false)
 	private String nome;
+	
+	@Column(length = 4000, nullable = false)
 	private String descricao;
+	
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "id_categoria", referencedColumnName = "id")
 	private Categoria categoria;
+	
+	@Column(precision = 14, scale = 2, nullable = false)
 	private BigDecimal preco;
+	
+	@Column(length = 100, nullable = false)
 	private String fabricante;
 	
+	@Version
+	private Long version;
+
 	public Produto() {
 		super();
 	}
-	
-	public Produto(Long id, String nome, String descricao, Categoria categoria, BigDecimal preco, String fabricante) {
+
+	public Produto(Long id, String nome, String descricao, Categoria categoria, BigDecimal preco, String fabricante,
+			Long version) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -23,51 +54,71 @@ public class Produto {
 		this.categoria = categoria;
 		this.preco = preco;
 		this.fabricante = fabricante;
+		this.version = version;
 	}
 
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 	public String getNome() {
 		return nome;
 	}
+
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+
 	public String getDescricao() {
 		return descricao;
 	}
+
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
+
 	public Categoria getCategoria() {
 		return categoria;
 	}
+
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
 	}
+
 	public BigDecimal getPreco() {
 		return preco;
 	}
+
 	public void setPreco(BigDecimal preco) {
 		this.preco = preco;
 	}
+
 	public String getFabricante() {
 		return fabricante;
 	}
+
 	public void setFabricante(String fabricante) {
 		this.fabricante = fabricante;
 	}
-	
+
+	public Long getVersion() {
+		return version;
+	}
+
+	public void setVersion(Long version) {
+		this.version = version;
+	}
+
 	@Override
 	public String toString() {
 		return "Produto [id=" + id + ", nome=" + nome + ", descricao=" + descricao + ", categoria=" + categoria
-				+ ", preco=" + preco + ", fabricante=" + fabricante + "]";
+				+ ", preco=" + preco + ", fabricante=" + fabricante + "";
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -80,7 +131,7 @@ public class Produto {
 		result = prime * result + ((preco == null) ? 0 : preco.hashCode());
 		return result;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -122,7 +173,5 @@ public class Produto {
 			return false;
 		return true;
 	}
-	
-	
-	
+
 }

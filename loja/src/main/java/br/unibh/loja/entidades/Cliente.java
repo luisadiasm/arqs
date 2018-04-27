@@ -2,25 +2,61 @@ package br.unibh.loja.entidades;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
+import javax.persistence.Version;
+
+@Entity
+@Table(name = "tb_cliente", uniqueConstraints = { @UniqueConstraint(columnNames = { "cpf" }),
+		@UniqueConstraint(columnNames = { "login" }) })
+
 public class Cliente {
-	
+
+	@Id
 	private Long id;
+	@Column(length=100, nullable=false)
 	private String nome;
+	
+	@Column(length=15, nullable=false)
 	private String login;
+	
+	@Column(length=100, nullable=false)
 	private String senha;
+	
+	@Column(length=100, nullable=false)
 	private String perfil;
+	
+	@Column(length=11, nullable=false)
 	private String cpf;
+	
+	@Column(length=14, nullable=true)
 	private String telefone;
+	
+	@Column(length=100, nullable=true)
 	private String email;
+	
+	@Temporal(TemporalType.DATE)
+	@Column(name="data_nascimento", nullable=false)
 	private Date dataNascimento;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="data_cadastro", nullable=false)
 	private Date dataCadastro;
 	
+	@Version
+	private Long version;
+
 	public Cliente() {
 		super();
 	}
-	
+
 	public Cliente(Long id, String nome, String login, String senha, String perfil, String cpf, String telefone,
-			String email, Date dataNascimento, Date dataCadastro) {
+			String email, Date dataNascimento, Date dataCadastro, Long version) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -32,76 +68,104 @@ public class Cliente {
 		this.email = email;
 		this.dataNascimento = dataNascimento;
 		this.dataCadastro = dataCadastro;
+		this.version = version;
 	}
 
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 	public String getNome() {
 		return nome;
 	}
+
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+
 	public String getLogin() {
 		return login;
 	}
+
 	public void setLogin(String login) {
 		this.login = login;
 	}
+
 	public String getSenha() {
 		return senha;
 	}
+
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
+
 	public String getPerfil() {
 		return perfil;
 	}
+
 	public void setPerfil(String perfil) {
 		this.perfil = perfil;
 	}
+
 	public String getCpf() {
 		return cpf;
 	}
+
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
+
 	public String getTelefone() {
 		return telefone;
 	}
+
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
+
 	public String getEmail() {
 		return email;
 	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
 	public Date getDataNascimento() {
 		return dataNascimento;
 	}
+
 	public void setDataNascimento(Date dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
+
 	public Date getDataCadastro() {
 		return dataCadastro;
 	}
+
 	public void setDataCadastro(Date dataCadastro) {
 		this.dataCadastro = dataCadastro;
 	}
-	
+
+	public Long getVersion() {
+		return version;
+	}
+
+	public void setVersion(Long version) {
+		this.version = version;
+	}
+
 	@Override
 	public String toString() {
 		return "Cliente [id=" + id + ", nome=" + nome + ", login=" + login + ", senha=" + senha + ", perfil=" + perfil
 				+ ", cpf=" + cpf + ", telefone=" + telefone + ", email=" + email + ", dataNascimento=" + dataNascimento
 				+ ", dataCadastro=" + dataCadastro + "]";
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -118,7 +182,7 @@ public class Cliente {
 		result = prime * result + ((telefone == null) ? 0 : telefone.hashCode());
 		return result;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -180,8 +244,5 @@ public class Cliente {
 			return false;
 		return true;
 	}
-	
-	
-	
-	
+
 }
