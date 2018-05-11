@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -21,8 +23,11 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.br.CPF;
 
 @Entity
-@Table(name = "tb_cliente", uniqueConstraints = { @UniqueConstraint(columnNames = { "cpf" }),
-		@UniqueConstraint(columnNames = { "login" }) })
+@Table(name="tb_cliente", uniqueConstraints = { @UniqueConstraint(columnNames = {"id"})
+})
+@NamedQueries({
+@NamedQuery(name="Cliente.findByName", query = "select o from Categoria o where o.id like :id")
+})
 
 public class Cliente {
 

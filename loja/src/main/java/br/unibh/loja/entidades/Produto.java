@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
@@ -18,8 +20,11 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotBlank;
 
-@Entity
-@Table(name = "tb_produto", uniqueConstraints = { @UniqueConstraint(columnNames = { "nome" }) })
+@Table(name="tb_produto", uniqueConstraints = { @UniqueConstraint(columnNames = {"id"})
+})
+@NamedQueries({
+@NamedQuery(name="Produto.findByName", query = "select o from Categoria o where o.id like :id")
+})
 
 public class Produto {
 
