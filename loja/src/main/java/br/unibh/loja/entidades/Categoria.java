@@ -19,7 +19,7 @@ import org.hibernate.validator.constraints.NotBlank;
  @UniqueConstraint(columnNames = {"descricao"})
 })
 @NamedQueries({
-@NamedQuery(name="Cidade.findByName", query = "select o from Categoria o where o.descricao like :descricao")
+@NamedQuery(name="Categoria.findByName", query = "select o from Categoria o where o.descricao like :nome")
 })
 
 
@@ -42,11 +42,10 @@ public class Categoria {
 		super();
 	}
 
-	public Categoria(Long id, String descricao, Long version) {
+	public Categoria(Long id, String descricao) {
 		super();
 		this.id = id;
 		this.descricao = descricao;
-		this.version = version;
 	}
 
 	public Long getId() {

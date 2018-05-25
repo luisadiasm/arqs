@@ -3,8 +3,12 @@ package br.unibh.loja.negocio;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+
+import java.util.Date;
 import java.util.logging.Logger;
+
 import javax.inject.Inject;
+
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.Archive;
@@ -15,62 +19,61 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
-import br.unibh.loja.entidades.Cidade;
-import br.unibh.loja.entidades.Estado;
-import br.unibh.loja.entidades.Fornecedor;
+
+import br.unibh.loja.entidades.Categoria;
+import br.unibh.loja.entidades.Cliente;
+import br.unibh.loja.entidades.Produto;
 import br.unibh.loja.util.Resources;
 
 @RunWith(Arquillian.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class TesteServicoCidade {
+public class TesteServicoCliente {
 	@Deployment
 	public static Archive<?> createTestArchive() {
-		// Cria o pacote que vai ser instalado no Wildfly para realizacao dos testes
-		return ShrinkWrap.create(WebArchive.class, "testeseguro.war")
-				.addClasses(Cidade.class, Estado.class, Fornecedor.class, Resources.class, DAO.class,
-						ServicoCidade.class)
-				.addAsResource("META-INF/persistence.xml", "METAINF/persistence.xml")
+		return ShrinkWrap.create(WebArchive.class, "testeloja.war")
+				.addClasses(Categoria.class, Cliente.class, Produto.class, Resources.class, DAO.class,
+						ServicoCategoria.class, ServicoCliente.class)
+				.addAsResource("META-INF/persistence.xml", "META-INF/persistence.xml")
 				.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
 	}
 
-	// Realiza as injecoes com CDI
 	@Inject
 	private Logger log;
 	@Inject
-	private ServicoCidade ss;
+	private ServicoCliente ss;
 
 	@Test
 	public void teste01_inserirSemErro() throws Exception {
 		log.info("============> Iniciando o teste " + Thread.currentThread().getStackTrace()[1].getMethodName());
-		Cidade o = new Cidade(null, "Belo Horizonte", Estado.MG);
+		Cliente o = new Cliente(1L, "Luísa", "luisadiasm", "1234", "Luisadiasm", "12072627656", "(31)9203-8277",
+				"luisadiasm@gmail.com", new Date(), new Date(), null);
 		ss.insert(o);
-		Cidade aux = (Cidade) ss.findByName("Belo Horizonte").get(0);
+		Cliente aux = (Cliente) ss.findByName("Luísa").get(0);
 		assertNotNull(aux);
 		log.info("============> Finalizando o teste " + Thread.currentThread().getStackTrace()[1].getMethodName());
 	}
 
 	@Test
 	public void teste02_inserirComErro() throws Exception {
-	log.info("============> Iniciando o teste " +
-	Thread.currentThread().getStackTrace()[1].getMethodName());
-	try {
-	Cidade o = new Cidade(null, "Belo Horizonte@", Estado.MG);
-	ss.insert(o);
-	} catch (Exception e){
-	assertTrue(checkString(e, "Caracteres permitidos: letras, espaços, ponto e
-	aspas simples"));
-	}
-	log.info("============> Finalizando o teste " +
-	Thread.currentThread().getStackTrace()[1].getMethodName());
+		log.info("============> Iniciando o teste " + Thread.currentThread().getStackTrace()[1].getMethodName());
+		try {
+			Cliente o = new Cliente(1L, "Luísa", "luisadiasm", "1234", "Luisadiasm", "12345678910", "(31)9203-8277",
+					"luisadiasm@gmail.com",  new Date(),  new Date(), null);
+			ss.insert(o);
+		} catch (Exception e) {
+
+			assertTrue(checkString(e, "CPF inválido"));
+		}
+		log.info("============> Finalizando o teste " + Thread.currentThread().getStackTrace()[1].getMethodName());
 	}
 
 	@Test
 	public void teste03_atualizar() throws Exception {
 		log.info("============> Iniciando o teste " + Thread.currentThread().getStackTrace()[1].getMethodName());
-		Cidade o = (Cidade) ss.findByName("Belo Horizonte").get(0);
-		o.setNome("Belo Horizonte modificado");
+		Cliente o = (Cliente) ss.findByName("Luísa").get(0);
+		o.setNome("Luísa modificado");
 		ss.update(o);
-		Cidade aux = (Cidade) ss.findByName("Belo Horizonte modificado").get(0);
+		Cliente aux = (Cliente) ss.findByName("Luísa modificado").get(0);
 		assertNotNull(aux);
 		log.info("============> Finalizando o teste " + Thread.currentThread().getStackTrace()[1].getMethodName());
 	}
@@ -78,9 +81,9 @@ public class TesteServicoCidade {
 	@Test
 	public void teste04_excluir() throws Exception {
 		log.info("============> Iniciando o teste " + Thread.currentThread().getStackTrace()[1].getMethodName());
-		Cidade o = (Cidade) ss.findByName("Belo Horizonte").get(0);
+		Cliente o = (Cliente) ss.findByName("Luísa").get(0);
 		ss.delete(o);
-		assertEquals(0, ss.findByName("Belo Horizonte modificado").size());
+		assertEquals(0, ss.findByName("Luísa modificado").size());
 		log.info("============> Finalizando o teste " + Thread.currentThread().getStackTrace()[1].getMethodName());
 	}
 
@@ -92,4 +95,5 @@ public class TesteServicoCidade {
 		}
 		return false;
 	}
+
 }

@@ -25,25 +25,16 @@ public class TesteCliente {
 
 	@Test
 	public void testCompareObjects() {
-		Date date = new Date();
+		//Date date = new Date();
 		Cliente c1 = new Cliente(1L, "Luísa", "luisadiasm", "1234", "Luisadiasm", "12072627656", "(31)992038277", "luisadiasm@gmail.com", null, null, null);
 		Cliente c2 = new Cliente(1L, "Vinicius", "viniciusB", "4321", "ViniciusBrum", "12345678910", "(31)33333333", "vinicim1997@gmail.com", null, null, null);
 		assertNotEquals(c1, c2);
 	}
-/*
-	@Test
-	public void testGenerateHash() {
-		Date date = new Date();
-		Cliente c1 = new Cliente(1L, "Luísa", "luisadiasm", "1234", "Luisadiasm", "12072627656", "(31)992038277", "luisadiasm@gmail.com", date, date);
-		Cliente c2 = new Cliente(1L, "Vinicius", "viniciusB", "4321", "ViniciusBrum", "12345678910", "(31)33333333", "vinicim1997@gmail.com", date, date);
-		assertEquals(c1.hashCode(), c2.hashCode());
-		Cliente c3 = new Cliente(1L, "Guilherme", "GuilhermeB", "2468", "Guilhermisson", "01987654321", "(31)22222222", "gbbastos@gmail.com", date, date);
-		assertNotEquals(c1.hashCode(), c3.hashCode());
-	}*/
 
+	
 	@Test
 	public void testPrintObject() {
-		Date date = new Date();
+		//Date date = new Date();
 		Cliente c1 = new Cliente(1L, "Luísa", "luisadiasm", "1234", "Luisadiasm", "12072627656", "(31)992038277", "luisadiasm@gmail.com", null, null, null);
 		assertEquals(c1.toString(),"Cliente [id=1, nome=Luísa, login=luisadiasm, senha=1234, perfil=Luisadiasm, cpf=12072627656, telefone=(31)992038277, email=luisadiasm@gmail.com, dataNascimento=null, dataCadastro=null]");
 		System.out.println(c1);

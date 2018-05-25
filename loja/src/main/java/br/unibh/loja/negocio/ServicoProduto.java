@@ -34,19 +34,19 @@ public class ServicoProduto implements DAO<Produto, Long> {
 	}
 
 	public Produto find(Long k) throws Exception {
-		log.info("Encontrando pela chave " + k);
+		log.info("Encontrando " + k);
 		return em.find(Produto.class, k);
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<Produto> findAll() throws Exception {
-		log.info("Encontrando todos os objetos");
-		return em.createQuery("from Cliente").getResultList();
+		log.info("Encontrando os objetos");
+		return em.createQuery("from Produto").getResultList();
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<Produto> findByName(String name) throws Exception {
-		log.info("Encontrando o " + name);
-		return em.createNamedQuery("Cliente.findByName").setParameter("nome", "%" + name + "%").getResultList();
+		log.info("Encontrando " + name);
+		return em.createNamedQuery("Produto.findByName").setParameter("nome", "%" + name + "%").getResultList();
 	}
 }
