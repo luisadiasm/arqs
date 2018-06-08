@@ -25,7 +25,8 @@ import org.hibernate.validator.constraints.NotBlank;
 @Table(name="tb_produto", uniqueConstraints = { @UniqueConstraint(columnNames = {"nome"})
 })
 @NamedQueries({
-@NamedQuery(name="Produto.findByName", query = "select o from Produto o where o.nome like :nome")
+@NamedQuery(name="Produto.findByName", query = "select o from Produto o where o.nome like :nome"),
+@NamedQuery(name="Produto.findByCategoria", query = "select o from Produto o where o.categoria.id =:id_categoria")
 })
 
 public class Produto {

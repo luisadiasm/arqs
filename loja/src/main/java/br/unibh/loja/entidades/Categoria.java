@@ -107,4 +107,20 @@ public class Categoria {
 			return false;
 		return true;
 	}
+	
+	public boolean equalsDesc(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Categoria other = (Categoria) obj;
+		if (descricao == null) {
+			if (other.descricao != null)
+				return false;
+		} else if (!descricao.equals(other.descricao))
+			return false;
+		return true;
+	}
 }
