@@ -1,5 +1,6 @@
 package br.unibh.loja.entidades;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -28,7 +29,8 @@ import org.hibernate.validator.constraints.br.CPF;
 		@UniqueConstraint(columnNames = { "login" }) })
 @NamedQueries({ @NamedQuery(name = "Cliente.findByName", query = "select o from Cliente o where o.nome like :nome") })
 
-public class Cliente {
+public class Cliente implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

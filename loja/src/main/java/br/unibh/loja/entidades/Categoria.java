@@ -1,5 +1,7 @@
 package br.unibh.loja.entidades;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,7 +25,8 @@ import org.hibernate.validator.constraints.NotBlank;
 })
 
 
-public class Categoria {
+public class Categoria implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,5 +1,6 @@
 package br.unibh.loja.entidades;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 import javax.persistence.Column;
@@ -29,7 +30,8 @@ import org.hibernate.validator.constraints.NotBlank;
 @NamedQuery(name="Produto.findByCategoria", query = "select o from Produto o where o.categoria.id =:id_categoria")
 })
 
-public class Produto {
+public class Produto implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
